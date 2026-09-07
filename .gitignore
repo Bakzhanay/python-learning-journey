@@ -17,3 +17,6 @@ ENV/
 .idea/
 *.swp
 *.swo
+
+# Сode practice files
+*_practice.py
