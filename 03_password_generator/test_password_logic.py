@@ -1,4 +1,4 @@
-from password_practice_logic import generate_password
+from password_logic import generate_password
 import pytest
 import string
 
