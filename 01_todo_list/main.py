@@ -1,59 +1,84 @@
+# --- ЧИСТАЯ БИЗНЕС-ЛОГИКА (её мы и будем тестировать) ---
+
+def add_task_logic(tasks, task_text):
+    """Добавляет задачу, если она не пустая. Возвращает True/False."""
+    cleaned_text = task_text.strip()
+    if cleaned_text:
+        tasks.append(cleaned_text)
+        return True
+    return False
+
+
+def delete_task_logic(tasks, choice_str):
+    """Удаляет задачу по строковому индексу от пользователя. Возвращает True/False."""
+    try:
+        choice = int(choice_str)
+        if 1 <= choice <= len(tasks):
+            removed = tasks.pop(choice -1)
+            return True
+        return False
+    except ValueError:
+        return False
+
+
+# --- Интерфейсная часть (ввод/вывод) ---
+
 def show_tasks(tasks):
     if not tasks:
-        print("\nСписок задач пуст.")
+        print("\nПустое значение.")
         return
-    print("\nВаши задачи: ")
+    
+    print("\nВаши задачи:")
     for index, task in enumerate(tasks, start=1):
         print(f"{index}. {task}")
 
 
-def add_task(tasks):
-    task = input("Введите текст задачи: ").strip()
-    if task: 
-        tasks.append(task)
-        print(f"Задача '{task}' добавлена.")
-    else: 
-        print("Ошибка: задача не может быть пустой.")
+def add_task_ui(tasks):
+    task_text = input("Напишите вашу задачу: ").strip()
+    success = add_task_logic(tasks, task_text)
+    if success:
+        print("Задача успешно выполнена")
+    else:
+        print("Неправильное значение. Повторите попытку.")
 
 
-def delete_task(tasks):
+def delete_task_ui(tasks):
     show_tasks(tasks)
     if not tasks:
         return
-    try:
-        choice = int(input("Введите номер задачи для удаления: "))
-        if 1 <= choice <= len(tasks):
-            removed = tasks.pop(choice -1)
-            print(f"Удалена задача: '{removed}'")
-        else:
-            print("Ошибка: Такого номера нет в списке.")
-    except ValueError:
-        print("Ошибка: Нужно ввести число.")
+    
+    choice_str = input("Выберите нумерацию задачи которую хотите удалить: ")
+    success = delete_task_logic(tasks, choice_str)
+    if success:
+        print("Задача удалена.")
+    else:
+        print("Ошибка: неверный номер.")
 
 
 def main():
     tasks = []
     while True:
-        print("\n--TO-DO LIST ---")
-        print("1. Посмотреть задачи")
-        print("2. Добавить задачу")
-        print("3. Удалить задачу")
-        print("4. Выйти")
+        print("\n TO DO LIST ")
+        print("1. Show all")
+        print("2. Add")
+        print("3. Del")
+        print("4. Exit")
 
-        choice = input("Выберите пункт меню: ").strip()
+        choice = input("Choose one: ").strip()
 
         if choice == "1":
             show_tasks(tasks)
         elif choice == "2":
-            add_task(tasks)
+            add_task_ui(tasks)
         elif choice == "3":
-            delete_task(tasks)
+            delete_task_ui(tasks)
         elif choice == "4":
-            print("Выход из программы.")
+            print("See you later...")
             break
         else:
-            print("Ошибка: неверный выбор, введите цифру от 1 до 4.")
+            print("Ошибка: Выберите цифру от 1 до 4.")
 
 
-if __name__ == "__main__":
+if __name__=="__main__":
     main()
+            

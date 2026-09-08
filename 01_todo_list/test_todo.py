@@ -1,4 +1,4 @@
-from main_for_test import add_task_logic, delete_task_logic
+from main import add_task_logic, delete_task_logic
 
 def test_add_task_success():
     tasks = []
